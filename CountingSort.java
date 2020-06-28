@@ -3,35 +3,45 @@
 
 public class CountingSort {
 
-    private void countingSort(char[] chars) {
-        int count[] = new int[256];
-        // for (int i = 0; i < 256; i++) {
-        //     count[i] = 0;
-        // }
-        for (int i = 0; i < chars.length; i++) {
-            count[chars[i]]++;
+    public void sort(int[] arr) {
+        int n = arr.length;
+        int[] output = new int[n];
+
+        int max = arr[0];
+        for (int i = 1; i < n; i++) {
+            max = Math.max(max, arr[i]);
         }
-        int idx = 0;
-        for (int i = 0; i < 256; i++) {
-            while (count[i] > 0) {
-                chars[idx++] = (char)i;
-                count[i]--;
-            }
+
+        int[] count = new int[max + 1];
+
+        for (int num : arr) {
+            count[num]++;
         }
+
+        //**** Core ****
+        for (int i = 1; i < count.length; i++) {
+            count[i] += count[i - 1];
+        }
+        for (int num : arr) {
+            int pos = count[num] - 1;
+            arr[pos] = num;
+            count[num]--;
+        }
+        //**************
     }
 
     public static void main(String[] args) {
         CountingSort cs = new CountingSort();
-        char chars[] = {'a', 'b', 'e', 'c', ':', ')'};
+        int[] nums = new int[]{1, 2, 3, 2, 3, 2, 5, 6, 7, 8, 0};
         System.out.print("Old: ");
-        for (int i = 0; i < chars.length; i++) {
-            System.out.print(chars[i] + " ");
+        for (int i = 0; i < nums.length; i++) {
+            System.out.print(nums[i] + " ");
         }
-        cs.countingSort(chars);
+        cs.sort(nums);
         System.out.println();
         System.out.print("New: ");
-        for (int i = 0; i < chars.length; i++) {
-            System.out.print(chars[i] + " ");
+        for (int i = 0; i < nums.length; i++) {
+            System.out.print(nums[i] + " ");
         }
     }
 
