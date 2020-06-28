@@ -3,8 +3,7 @@
 
 public class MergeSort {
 
-    void merge(int nums[], int l, int m, int r) 
-    { 
+    private void merge(int[] nums, int l, int m, int r) { 
         // Find sizes of two subarrays to be merged 
         int n1 = m - l + 1; 
         int n2 = r - m; 
